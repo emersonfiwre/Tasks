@@ -30,6 +30,12 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
         verifyLoggedUser()
     }
 
+    /*
+    ********** MY LOGIN****************
+    * t100@2.com
+    * 123456
+    * */
+
     override fun onClick(v: View) {
         if (v.id == R.id.button_login) {
             handleLogin()
