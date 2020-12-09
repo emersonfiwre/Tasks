@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -43,12 +44,15 @@ class AllTasksFragment : Fragment() {
             }
 
             override fun onDeleteClick(id: Int) {
+                mViewModel.delete(id)
             }
 
             override fun onCompleteClick(id: Int) {
+                mViewModel.complete(id)
             }
 
             override fun onUndoClick(id: Int) {
+                mViewModel.undo(id)
             }
         }
 
@@ -69,6 +73,11 @@ class AllTasksFragment : Fragment() {
         mViewModel.list.observe(viewLifecycleOwner, Observer {
             if(it.isNotEmpty()){
                 mAdapter.updateListener(it)
+            }
+        })
+        mViewModel.validation.observe(viewLifecycleOwner, Observer {
+            if(it.success()){
+                Toast.makeText(context, getString(R.string.task_removed),Toast.LENGTH_SHORT).show()
             }
         })
     }

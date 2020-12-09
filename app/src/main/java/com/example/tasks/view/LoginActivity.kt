@@ -32,8 +32,8 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
 
     /*
     ********** MY LOGIN****************
-    * t100@2.com
-    * 123456
+    * email: t100@2.com
+    * senha: 123456
     * */
 
     override fun onClick(v: View) {
@@ -66,6 +66,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
         mViewModel.login.observe(this, Observer {
             if (it.success()) {
                 startActivity(Intent(this, MainActivity::class.java))
+                finish()
             } else {
                 val message = it.failure()
                 Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
