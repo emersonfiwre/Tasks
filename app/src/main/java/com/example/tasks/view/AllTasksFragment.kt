@@ -29,7 +29,7 @@ class AllTasksFragment : Fragment() {
         val root = inflater.inflate(R.layout.fragment_all_tasks, container, false)
 
         //Filtro de tarefas
-        mTaskFilter = arguments?.getInt(TaskConstants.BUNDLE.TASKFILTER,0) ?: 0
+        mTaskFilter = requireArguments().getInt(TaskConstants.BUNDLE.TASKFILTER, 0)
 
         val recycler = root.findViewById<RecyclerView>(R.id.recycler_all_tasks)
         recycler.layoutManager = LinearLayoutManager(context)

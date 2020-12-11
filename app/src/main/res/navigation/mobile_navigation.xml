@@ -34,7 +34,7 @@
         tools:layout="@layout/fragment_all_tasks">
         <argument
             android:name="taskfilter"
-            android:defaultValue="0"
+            android:defaultValue="2"
             app:argType="integer" />
     </fragment>
 </navigation>

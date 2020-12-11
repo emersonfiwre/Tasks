@@ -74,6 +74,7 @@ class MainActivity : AppCompatActivity() {
             } else {
                 NavigationUI.onNavDestinationSelected(it, navController)
                 drawerLayout.closeDrawer(GravityCompat.START)
+                val s = ""
             }
             true
         }

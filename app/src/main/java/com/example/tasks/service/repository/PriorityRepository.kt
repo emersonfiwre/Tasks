@@ -1,7 +1,9 @@
 package com.example.tasks.service.repository
 
 import android.content.Context
+import com.example.tasks.R
 import com.example.tasks.service.constants.TaskConstants
+import com.example.tasks.service.listener.APIListener
 import com.example.tasks.service.model.PriorityModel
 import com.example.tasks.service.repository.local.TaskDatabase
 import com.example.tasks.service.repository.remote.PriorityService
@@ -15,27 +17,38 @@ class PriorityRepository(val context: Context): BaseRepository(context) {
     private val mRemote = RetrofitClient.createrService(PriorityService::class.java)
     private val mPriorityDatabase = TaskDatabase.getDatabase(context).priorityDAO()
 
-    fun all() {
-        if(!isConnectionAvailable(context)){
+    fun all(listener: APIListener<List<PriorityModel>>) {
+
+        // Verificação de internet
+        if (!isConnectionAvailable(mContext)) {
+            listener.onFailure(mContext.getString(R.string.ERROR_INTERNET_CONNECTION))
             return
         }
-        val call: Call<List<PriorityModel>> = mRemote.list()
+
+        val call: Call<List<PriorityModel>> = mRemote.all()
         call.enqueue(object : Callback<List<PriorityModel>> {
+            override fun onFailure(call: Call<List<PriorityModel>>, t: Throwable) {
+                listener.onFailure(mContext.getString(R.string.ERROR_UNEXPECTED))
+            }
+
             override fun onResponse(
                 call: Call<List<PriorityModel>>,
                 response: Response<List<PriorityModel>>
             ) {
-                if (response.code() == TaskConstants.HTTP.SUCCESS) {
-                    val s = ""
-                    mPriorityDatabase.clear()
-                    response.body()?.let { mPriorityDatabase.save(it) }
+                val code = response.code()
+                if (fail(code)) {
+                    listener.onFailure(failRespose(response.errorBody()!!.string()))
+                } else {
+                    response.body()?.let { listener.onSuccess(it) }
                 }
             }
 
-            override fun onFailure(call: Call<List<PriorityModel>>, t: Throwable) {
-            }
-
         })
+    }
+
+    fun save(list: List<PriorityModel>) {
+        mPriorityDatabase.clear()
+        mPriorityDatabase.save(list)
     }
 
     fun list() = mPriorityDatabase.list()

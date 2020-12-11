@@ -30,10 +30,8 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
         setListeners();
         observe()
 
-        // Verifica se usuário está logado
-        verifyLoggedUser()
+        mViewModel.isAuthenticationAvailable()
 
-        showAuthentication()
     }
 
     /*
@@ -58,21 +56,15 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
         val biometricPrompt = BiometricPrompt(this@LoginActivity,
             executor,
             object : BiometricPrompt.AuthenticationCallback() {
-                override fun onAuthenticationFailed() {
-                    super.onAuthenticationFailed()
-                }
-
-                override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
-                    super.onAuthenticationError(errorCode, errString)
-                }
-
                 override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
+                    startActivity(Intent(applicationContext, MainActivity::class.java))
+                    finish()
                     super.onAuthenticationSucceeded(result)
                 }
 
             })
         val info: BiometricPrompt.PromptInfo = BiometricPrompt.PromptInfo.Builder()
-            .setTitle("Titulo")
+            .setTitle("Autenticação")
             .setSubtitle("Subtitulo")
             .setDescription("Descrição")
             .setNegativeButtonText("Cancelar")
@@ -89,12 +81,6 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
         text_register.setOnClickListener(this)
     }
 
-    /**
-     * Verifica se usuário está logado
-     */
-    private fun verifyLoggedUser() {
-        mViewModel.verifyLoggedUser()
-    }
 
     /**
      * Observa ViewModel
@@ -109,10 +95,16 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
                 Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
             }
         })
-        mViewModel.loggedUser.observe(this, Observer {
-            if (it) {
-                startActivity(Intent(this, MainActivity::class.java))
-
+        mViewModel.authentication.observe(this, Observer {
+            if (it.isFingerprint) {
+                if (it.isLogged) {
+                    showAuthentication()
+                }
+            } else {
+                if (it.isLogged) {
+                    startActivity(Intent(applicationContext, MainActivity::class.java))
+                    finish()
+                }
             }
         })
     }

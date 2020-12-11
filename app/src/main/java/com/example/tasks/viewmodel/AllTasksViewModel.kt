@@ -36,12 +36,16 @@ class AllTasksViewModel(application: Application) : AndroidViewModel(application
             }
         }
 
-        if (taskFilter == TaskConstants.FILTER.ALL) {
-            mTaskRepository.all(listener)
-        } else if (taskFilter == TaskConstants.FILTER.NEXT) {
-            mTaskRepository.nextWeek(listener)
-        } else {
-            mTaskRepository.overdue(listener)
+        when (taskFilter) {
+            TaskConstants.FILTER.ALL -> {
+                mTaskRepository.all(listener)
+            }
+            TaskConstants.FILTER.NEXT -> {
+                mTaskRepository.nextWeek(listener)
+            }
+            else -> {
+                mTaskRepository.overdue(listener)
+            }
         }
     }
 
@@ -53,7 +57,7 @@ class AllTasksViewModel(application: Application) : AndroidViewModel(application
         updateStatus(id, false)
     }
 
-    fun updateStatus(id: Int, complete: Boolean) {
+    private fun updateStatus(id: Int, complete: Boolean) {
         mTaskRepository.updateStatus(id, complete, object : APIListener<Boolean> {
             override fun onSuccess(model: Boolean) {
                 list(mTaskFilter)
