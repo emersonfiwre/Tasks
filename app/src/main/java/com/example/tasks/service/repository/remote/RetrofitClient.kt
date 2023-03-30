@@ -13,21 +13,19 @@ class RetrofitClient private constructor() {
         private lateinit var retrofit: Retrofit
         private var personKey = ""
         private var tokenKey = ""
-        private val baseUrl = " http://devmasterteam.com/CursoAndroidAPI/"
+        private val baseUrl = "http://devmasterteam.com/CursoAndroidAPI/"
         private fun getRetrofitInstance(): Retrofit {
             if (!Companion::retrofit.isInitialized) {
                 val httpClient = OkHttpClient.Builder()
-                httpClient.addInterceptor(object : Interceptor {
-                    override fun intercept(chain: Interceptor.Chain): Response {
-                        val request =
-                            chain.request()
-                                .newBuilder()
-                                .addHeader(TaskConstants.HEADER.PERSON_KEY, personKey)
-                                .addHeader(TaskConstants.HEADER.TOKEN_KEY, tokenKey)
-                                .build()
-                        return chain.proceed(request)
-                    }
-                })
+                httpClient.addInterceptor { chain ->
+                    val request =
+                        chain.request()
+                            .newBuilder()
+                            .addHeader(TaskConstants.HEADER.PERSON_KEY, personKey)
+                            .addHeader(TaskConstants.HEADER.TOKEN_KEY, tokenKey)
+                            .build()
+                    chain.proceed(request)
+                }
                 retrofit = Retrofit.Builder()
                     .addConverterFactory(GsonConverterFactory.create())
                     .client(httpClient.build())
