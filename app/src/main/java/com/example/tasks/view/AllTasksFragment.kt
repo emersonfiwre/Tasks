@@ -28,14 +28,12 @@ class AllTasksFragment : Fragment() {
         mViewModel = ViewModelProvider(this).get(AllTasksViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_all_tasks, container, false)
 
-        //Filtro de tarefas
         mTaskFilter = requireArguments().getInt(TaskConstants.BUNDLE.TASKFILTER, 0)
 
         val recycler = root.findViewById<RecyclerView>(R.id.recycler_all_tasks)
         recycler.layoutManager = LinearLayoutManager(context)
         recycler.adapter = mAdapter
 
-        // Eventos disparados ao clicar nas linhas da RecyclerView
         mListener = object : TaskListener {
             override fun onListClick(id: Int) {
                 val intent = Intent(context, TaskFormActivity::class.java)
@@ -57,11 +55,8 @@ class AllTasksFragment : Fragment() {
                 mViewModel.undo(id)
             }
         }
-
-        // Cria os observadores
         observe()
 
-        // Retorna view
         return root
     }
 

@@ -2,23 +2,23 @@ package com.example.tasks.view
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.Gravity
-import android.view.Menu
 import android.widget.TextView
-import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.android.material.snackbar.Snackbar
-import com.google.android.material.navigation.NavigationView
-import androidx.navigation.findNavController
-import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.ui.*
+import androidx.navigation.findNavController
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.NavigationUI
+import androidx.navigation.ui.navigateUp
+import androidx.navigation.ui.setupActionBarWithNavController
+import androidx.navigation.ui.setupWithNavController
 import com.example.tasks.R
 import com.example.tasks.viewmodel.MainViewModel
-import kotlinx.android.synthetic.main.nav_header_main.view.*
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.navigation.NavigationView
 
 class MainActivity : AppCompatActivity() {
 
@@ -35,14 +35,11 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
 
         val fab: FloatingActionButton = findViewById(R.id.fab)
-        fab.setOnClickListener { view ->
+        fab.setOnClickListener {
             startActivity(Intent(this, TaskFormActivity::class.java))
         }
 
-        // Navegação
         setupNavigation()
-
-        // Observadores
         observe()
     }
 
@@ -74,7 +71,6 @@ class MainActivity : AppCompatActivity() {
             } else {
                 NavigationUI.onNavDestinationSelected(it, navController)
                 drawerLayout.closeDrawer(GravityCompat.START)
-                val s = ""
             }
             true
         }

@@ -66,6 +66,4 @@ class TaskFormViewModel(application: Application) : AndroidViewModel(application
 
         })
     }
-
-
 }

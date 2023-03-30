@@ -9,7 +9,10 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.tasks.R
 import com.example.tasks.viewmodel.RegisterViewModel
-import kotlinx.android.synthetic.main.activity_register.*
+import kotlinx.android.synthetic.main.activity_register.button_save
+import kotlinx.android.synthetic.main.activity_register.edit_email
+import kotlinx.android.synthetic.main.activity_register.edit_name
+import kotlinx.android.synthetic.main.activity_register.edit_password
 
 class RegisterActivity : AppCompatActivity(), View.OnClickListener {
 
@@ -21,7 +24,6 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener {
 
         mViewModel = ViewModelProvider(this).get(RegisterViewModel::class.java)
 
-        // Inicializa eventos
         listeners()
         observe()
     }

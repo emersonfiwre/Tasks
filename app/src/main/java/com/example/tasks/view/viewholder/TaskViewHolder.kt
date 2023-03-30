@@ -43,7 +43,6 @@ class TaskViewHolder(itemView: View, val listener: TaskListener) :
             mImageTask.setImageResource(R.drawable.ic_todo)
         }
 
-        // Eventos
         mTextDescription.setOnClickListener { listener.onListClick(task.id) }
         mImageTask.setOnClickListener {
             if (task.complete) {

@@ -68,7 +68,7 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
 
                 // Erro silencioso
                 override fun onFailure(message: String) {
-                    val s = ""
+                    // Do Nothing
                 }
 
             })

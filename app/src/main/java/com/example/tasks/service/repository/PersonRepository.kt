@@ -23,7 +23,7 @@ class PersonRepository(val context: Context): BaseRepository(context) {
         }
 
         val call: Call<HeaderModel> = mRemote.login(email, password)
-        //Assíncrona
+        // Assíncrona
         call.enqueue(object : Callback<HeaderModel> {
             override fun onResponse(call: Call<HeaderModel>, response: Response<HeaderModel>) {
                 if(response.code() != TaskConstants.HTTP.SUCCESS){
@@ -47,7 +47,7 @@ class PersonRepository(val context: Context): BaseRepository(context) {
         }
 
         val call: Call<HeaderModel> = mRemote.create(name,email, password,true)
-        //Assíncrona
+        // Assíncrona
         call.enqueue(object : Callback<HeaderModel> {
             override fun onResponse(call: Call<HeaderModel>, response: Response<HeaderModel>) {
                 if(response.code() != TaskConstants.HTTP.SUCCESS){

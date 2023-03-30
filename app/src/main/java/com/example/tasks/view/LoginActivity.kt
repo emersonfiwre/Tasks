@@ -10,11 +10,12 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.tasks.R
-import com.example.tasks.service.helper.FingerprintHelper
-import com.example.tasks.service.repository.local.SecurityPreferences
 import com.example.tasks.viewmodel.LoginViewModel
-import kotlinx.android.synthetic.main.activity_login.*
+import kotlinx.android.synthetic.main.activity_login.button_login
 import java.util.concurrent.Executor
+import kotlinx.android.synthetic.main.activity_login.edit_email
+import kotlinx.android.synthetic.main.activity_login.edit_password
+import kotlinx.android.synthetic.main.activity_login.text_register
 
 class LoginActivity : AppCompatActivity(), View.OnClickListener {
 
@@ -26,12 +27,10 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
 
         mViewModel = ViewModelProvider(this).get(LoginViewModel::class.java)
 
-        // Inicializa eventos
-        setListeners();
+        setListeners()
         observe()
 
         mViewModel.isAuthenticationAvailable()
-
     }
 
     /*

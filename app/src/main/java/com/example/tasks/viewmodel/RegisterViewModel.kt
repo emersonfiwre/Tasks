@@ -34,5 +34,4 @@ class RegisterViewModel(application: Application) : AndroidViewModel(application
             }
         })
     }
-
 }

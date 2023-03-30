@@ -13,9 +13,12 @@ import com.example.tasks.service.constants.TaskConstants
 import com.example.tasks.service.model.TaskModel
 import com.example.tasks.viewmodel.TaskFormViewModel
 import kotlinx.android.synthetic.main.activity_register.button_save
-import kotlinx.android.synthetic.main.activity_task_form.*
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Calendar
+import kotlinx.android.synthetic.main.activity_task_form.button_date
+import kotlinx.android.synthetic.main.activity_task_form.check_complete
+import kotlinx.android.synthetic.main.activity_task_form.edit_description
+import kotlinx.android.synthetic.main.activity_task_form.spinner_priority
 
 class TaskFormActivity : AppCompatActivity(), View.OnClickListener,
     DatePickerDialog.OnDateSetListener {
@@ -31,7 +34,6 @@ class TaskFormActivity : AppCompatActivity(), View.OnClickListener,
 
         mViewModel = ViewModelProvider(this).get(TaskFormViewModel::class.java)
 
-        // Inicializa eventos
         listeners()
         observe()
 
