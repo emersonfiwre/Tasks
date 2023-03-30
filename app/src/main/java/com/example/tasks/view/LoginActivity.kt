@@ -48,10 +48,10 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun showAuthentication() {
-        //Executor
+        // Executor
         val executor: Executor = ContextCompat.getMainExecutor(this)
 
-        //BiometricPrompt
+        // BiometricPrompt
         val biometricPrompt = BiometricPrompt(this@LoginActivity,
             executor,
             object : BiometricPrompt.AuthenticationCallback() {
