@@ -13,7 +13,7 @@ class RetrofitClient private constructor() {
         private lateinit var retrofit: Retrofit
         private var personKey = ""
         private var tokenKey = ""
-        private val baseUrl = "http://devmasterteam.com/CursoAndroidAPI/"
+        private const val baseUrl = "http://devmasterteam.com/CursoAndroidAPI/"
         private fun getRetrofitInstance(): Retrofit {
             if (!Companion::retrofit.isInitialized) {
                 val httpClient = OkHttpClient.Builder()
